@@ -1,5 +1,6 @@
 public/bundle.js*
 build/
+.fable
 .ionide/
 Section2/TypingSpeed/public/
 # Node
