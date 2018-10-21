@@ -1,6 +1,7 @@
 module Model
 
-type Time = int array
+type Time = int list
+
 type Status =
     | Initial
     | JustStarted
@@ -13,6 +14,5 @@ type Message =
     | StartOver
     | KeyPress
     | TextUpdated of string
-
 
 type TypingModel = { Time : Time; Status : Status; CurrentText : string; TargetText : string }

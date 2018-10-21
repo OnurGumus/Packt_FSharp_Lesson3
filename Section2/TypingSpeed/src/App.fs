@@ -26,11 +26,15 @@ let model =
     { Status = Initial; 
         CurrentText = ""; 
         TargetText = originText; 
-        Time = ([|0;0;0;0|]) }
+        Time = zeroTime }
 
 let viewTime (timer : Time) =
-    [|timer.[0]; timer.[1]; timer.[2]|]
-        |> Array.map (fun s -> s.ToString("00")) 
+    seq{    
+            yield timer.[0] 
+            yield timer.[1] 
+            yield timer.[2]
+    }
+        |> Seq.map (fun s -> s.ToString("00")) 
         |> String.concat ":"
 
 let error _ _ = div[][str "Rendering error"]
@@ -78,14 +82,14 @@ let init () =
     { Status = Initial; 
         CurrentText = ""; 
         TargetText = originText; 
-        Time =[|0;0;0;0|] }, Cmd.none
+        Time = zeroTime}, Cmd.none
 
 let update' = update startTimer stopTimer
 
 Program.mkProgram init update' view
 
 #if DEBUG
-|> Program.withHMR
+//|> Program.withHMR
 #endif
 
 |> Program.withReact "elmish-app"
