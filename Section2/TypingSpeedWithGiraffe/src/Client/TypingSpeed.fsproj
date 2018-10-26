@@ -5,6 +5,7 @@
   <ItemGroup>
     <Compile Include="ReactErrorBoundaries.fs" />
     <Compile Include="Pages.fs" />
+    <Compile Include="TimeUtil.fs" />
     <Compile Include="FastestTime.fs" />
     <Compile Include="Home.fs" />
     <Compile Include="Main.fs" />

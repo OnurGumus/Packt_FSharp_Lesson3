@@ -30,7 +30,7 @@ Target.create "BuildSolution" (fun _ ->
         (DotNet.Options.withWorkingDirectory __SOURCE_DIRECTORY__ )
         "TypingSpeed.sln")
 
-Target.create "Build" (fun _ ->
+Target.create "BuildClientForProd" (fun _ ->
     runFable <| "webpack-cli -- --config " + WEBPACK_CONFIG_PATH
 )
 Target.create "RunServer" 
@@ -54,7 +54,6 @@ Target.create "BuildDotNet" (fun _ ->
 
 "DotnetRestore"
   ==> "BuildSolution"
-  ==> "Build"
   ==> "YarnInstall"
   ==> "Watch"
 

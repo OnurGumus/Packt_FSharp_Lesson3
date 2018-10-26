@@ -1,9 +1,7 @@
 module Home
-
+open TimeUtil
 
 module  Model =
-    type Time = int array
-
     type Status =
         | Initial
         | JustStarted
@@ -19,19 +17,13 @@ module  Model =
 
     type TypingModel = { Time : Time; Status : Status; CurrentText : string; TargetText : string }
 
-    let zeroTime = [|0;0;0;0|]
 
 
 module private Core =
-    open System
+
     open Elmish
     open Model
-    let private updateTime (timer : Time) : Time =
-        let t3 =  (timer.[3] + 1) |> float
-        let t0 =  (t3/100./60.) |> Math.Floor
-        let t1 =  (t3/100. - t0 * 60.) |> Math.Floor
-        let t2 =  (t3 - t1 * 100.- t0 * 6000.) |> Math.Floor
-        [|int t0;int t1;int t2; int t3|]
+  
 
     let update startTimer stopTimer message (model : TypingModel) =
         match message with

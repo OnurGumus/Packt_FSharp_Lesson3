@@ -1,4 +1,6 @@
 module FastestTime
+open Fable.PowerPack
+open Fable.PowerPack
 
     module Model =
         type Time = int array
@@ -7,7 +9,8 @@ module FastestTime
     module private Core =
         open Model
         open Elmish
-        let update  message (model : Time) = model, Cmd.none
+        let update  (message:Time) (model : Time) = 
+            message, Cmd.none
 
     
     module private View =
@@ -17,16 +20,26 @@ module FastestTime
         open Fable.Import.Browser
         open Fable.Helpers.React
         open Fable.Helpers.React.Props
-        let private viewTime (timer : Time) =
+
+        let loadCmd = 
+            let p () =
+                promise {
+                   let! r = Fetch.fetch("/api/fastestTime") []
+                   return! r.json<Time>()
+                }
+            Cmd.ofPromise p () (fun r-> r) (fun r-> zeroTime)
+        let private viewTime (timer : Time) = 
             timer.[0..2]
                 |> Array.map (fun s -> s.ToString("00"))
                 |> String.concat ":"
-        let root (model:Time) dispatch  = div [][str <| "Fastest Time is " + viewTime model]
+
+        let root (model:Time) dispatch  = 
+            h1 [][str <| "Fastest Time is " + (model |> TimeUtil.updateTime |> viewTime )]
     
 
     open Elmish
     let init () =
-       Model.zeroTime, Cmd.none
+       Model.zeroTime, (View.loadCmd)
 
     let view = View.root
 

@@ -3,13 +3,15 @@ open Pages
 module Model = 
     open Home.Model
     open Elmish
+    open TimeUtil
+    
     type PageModel =
         | HomePageModel of TypingModel
         | FastestTimeModel of Time
 
     type Message = 
         | HomeMessage of Home.Model.Message
-        | FastestTimeMessage of unit
+        | FastestTimeMessage of Time
 
     type Model = PageModel
     let init (page : Page option) =
@@ -24,8 +26,6 @@ module Model =
 module Core =
     open Model
     open Elmish
-  
-
 
     let update (message : Message) (model : Model) = 
         match message, model with

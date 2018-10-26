@@ -22,7 +22,7 @@ let fastestActor = spawnAnonymous system <| props(fun ctx ->
         | _ -> return! loop state
     }
 
-    loop [0;0;0;1000000])
+    loop [0;0;0;100000])
 
 let getFastest =
     fun (next : HttpFunc) (ctx : HttpContext) ->
