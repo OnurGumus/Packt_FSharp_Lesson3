@@ -2,12 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>fa2656d3-eeac-4828-b373-a0675a99fe14</UserSecretsId>
+    <GenerateUserSecretsAttribute>false</GenerateUserSecretsAttribute>
+    <UserSecretsId>30637645-d093-4985-b08e-a1fb996d6a13</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <None Include="wwwroot\*" />
+    <Compile Include="Api.fs" />
     <Compile Include="Startup.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.Globalization.Invariant" Value="true" />
+  </ItemGroup>
 </Project>

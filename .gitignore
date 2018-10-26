@@ -199,3 +199,4 @@ docs/tools/FSharp.Formatting.svclog
 project.lock.json
 Section2/TypingSpeedWithGiraffe/src/Server/wwwroot/
 .localhistory/
+*.pubxml
