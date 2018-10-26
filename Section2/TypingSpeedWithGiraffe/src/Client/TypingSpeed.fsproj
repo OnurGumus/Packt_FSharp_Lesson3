@@ -4,9 +4,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ReactErrorBoundaries.fs" />
+    <Compile Include="Pages.fs" />
+    <Compile Include="FastestTime.fs" />
     <Compile Include="Home.fs" />
     <Compile Include="Main.fs" />
-    <Compile Include="Pages.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />

@@ -8,6 +8,7 @@ open Fake.JavaScript
 open Fake.IO.FileSystemOperators
 [<Literal>]
 let FABLE_APP_DIR  = "src/Client"
+let SERVER_DIR = "src/Server"
 
 [<Literal>]
 let WEBPACK_CONFIG_PATH = FABLE_APP_DIR + "/webpack.config.js"
@@ -32,6 +33,8 @@ Target.create "BuildSolution" (fun _ ->
 Target.create "Build" (fun _ ->
     runFable <| "webpack-cli -- --config " + WEBPACK_CONFIG_PATH
 )
+Target.create "RunServer" 
+    (fun _ -> DotNet.exec (fun e -> { e with WorkingDirectory = SERVER_DIR} ) "watch" "run " |> ignore)
 
 Target.create "Watch" (fun _ ->
     runFable  <| "webpack-dev-server -- --config " + WEBPACK_CONFIG_PATH
@@ -55,5 +58,7 @@ Target.create "BuildDotNet" (fun _ ->
   ==> "YarnInstall"
   ==> "Watch"
 
-
+"DotnetRestore"
+  ==> "BuildSolution"
+  ==> "RunServer"
 Target.runOrDefault "Watch"

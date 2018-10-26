@@ -18,7 +18,7 @@ module.exports = {
     entry:   "./src/Client/TypingSpeed.fsproj",
     output: {
         path: path.join(__dirname, "../Server/wwwroot"),
-        filename: isProduction ? '[name].[hash].js' : '[name].js',
+        filename:  '[name].js',
         devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
     },
@@ -37,6 +37,8 @@ module.exports = {
         contentBase: "./src/Client/static",
         port: 8081,
         hot: true,
+        proxy: {'/api': 'http://localhost:5000'},
+        historyApiFallback: true
     },
     module: {
         rules: [{

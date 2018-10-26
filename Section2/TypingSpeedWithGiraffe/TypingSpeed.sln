@@ -4,7 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "TypingSpeed", "src\Client\TypingSpeed.fsproj", "{E5DEFC96-37CF-4844-9C9E-CFA0A9A8AED3}"
 EndProject
 
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TypingSepeed.Server", "src\Server\TypingSepeed.Server.fsproj", "{33B62160-10B5-48D6-BDF1-144041F3268A}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TypingSepeed.Server", "src\Server\TypingSpeed.Server.fsproj", "{33B62160-10B5-48D6-BDF1-144041F3268A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

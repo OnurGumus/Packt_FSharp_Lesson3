@@ -2,7 +2,7 @@ module Home
 
 
 module  Model =
-    type Time = int list
+    type Time = int array
 
     type Status =
         | Initial
@@ -11,7 +11,7 @@ module  Model =
         | Wrong
         | Correct
 
-    type Message = 
+    type Message =
         | Tick
         | StartOver
         | KeyPress
@@ -19,7 +19,7 @@ module  Model =
 
     type TypingModel = { Time : Time; Status : Status; CurrentText : string; TargetText : string }
 
-    let zeroTime = [0;0;0;0]
+    let zeroTime = [|0;0;0;0|]
 
 
 module private Core =
@@ -31,7 +31,7 @@ module private Core =
         let t0 =  (t3/100./60.) |> Math.Floor
         let t1 =  (t3/100. - t0 * 60.) |> Math.Floor
         let t2 =  (t3 - t1 * 100.- t0 * 6000.) |> Math.Floor
-        [int t0;int t1;int t2; int t3]
+        [|int t0;int t1;int t2; int t3|]
 
     let update startTimer stopTimer message (model : TypingModel) =
         match message with
@@ -44,7 +44,7 @@ module private Core =
 
             if model.CurrentText = model.TargetText then
                 {model with Status = Complete} , stopTimer
-            else if (let originTextMatch = model.TargetText.Substring(0, model.CurrentText.Length)  
+            else if (let originTextMatch = model.TargetText.Substring(0, model.CurrentText.Length)
                 model.CurrentText = originTextMatch) then
                 { model with Status = Correct}, Cmd.none
             else
@@ -76,12 +76,8 @@ module private View =
         Cmd.ofSub sub
 
     let private viewTime (timer : Time) =
-        seq{    
-                yield timer.[0] 
-                yield timer.[1] 
-                yield timer.[2]
-        }
-            |> Seq.map (fun s -> s.ToString("00")) 
+        timer.[0..2]
+            |> Array.map (fun s -> s.ToString("00"))
             |> String.concat ":"
 
     let private error _ _ = div[][str "Rendering error"]
@@ -109,19 +105,19 @@ module private View =
                 ]
                 button  [
                     Id "reset"
-                    OnClick (fun _ -> dispatch StartOver) 
+                    OnClick (fun _ -> dispatch StartOver)
                 ][str "Start over"]
             ]
         ]
 
 open Model
 open Elmish
-let init () = 
-    {   Status = Initial; 
-        CurrentText = ""; 
-        TargetText = View.originText; 
+let init () =
+    {   Status = Initial;
+        CurrentText = "";
+        TargetText = View.originText;
         Time = zeroTime } , Cmd.none
-  
+
 
 let view = View.root
 

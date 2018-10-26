@@ -1,7 +1,7 @@
 storage none
 source https://api.nuget.org/v3/index.json
 nuget Fable.Elmish.React
-nuget Fable.Elmish.Debugger  >= 2.0.1
+nuget Fable.Elmish.Debugger
 nuget Fable.Elmish
 nuget Fable.Elmish.Browser
 nuget Fable.Elmish.HMR
@@ -11,6 +11,8 @@ nuget Giraffe
 nuget Microsoft.AspNetCore.Hosting
 nuget Microsoft.AspNetCore.Server.Kestrel
 nuget Akkling 
+nuget Microsoft.AspNetCore.StaticFiles
+nuget Microsoft.AspNetCore
 clitool dotnet-fable
 
 // [ FAKE GROUP ]
