@@ -1,5 +1,6 @@
 module Home
 open TimeUtil
+open Fable.PowerPack
 
 module  Model =
     type Status =
@@ -14,8 +15,9 @@ module  Model =
         | StartOver
         | KeyPress
         | TextUpdated of string
+        | NOP
 
-    type TypingModel = { Time : Time; Status : Status; CurrentText : string; TargetText : string }
+    type TypingModel = { Time : TimeUtil.Time; Status : Status; CurrentText : string; TargetText : string }
 
 
 
@@ -25,7 +27,7 @@ module private Core =
     open Model
   
 
-    let update startTimer stopTimer message (model : TypingModel) =
+    let update startTimer stopTimer sendFastest message (model : TypingModel) =
         match message with
         | Tick -> { model with Time = updateTime model.Time}, Cmd.none
         | StartOver ->  {model with Status = Initial; Time = zeroTime; CurrentText = ""} , stopTimer
@@ -35,7 +37,7 @@ module private Core =
             let model = {model with CurrentText = text}
 
             if model.CurrentText = model.TargetText then
-                {model with Status = Complete} , stopTimer
+                {model with Status = Complete} , Cmd.batch[stopTimer; (sendFastest model.Time)]
             else if (let originTextMatch = model.TargetText.Substring(0, model.CurrentText.Length)
                 model.CurrentText = originTextMatch) then
                 { model with Status = Correct}, Cmd.none
@@ -66,6 +68,14 @@ module private View =
             window.clearInterval !!(window?myInterval)
             window?myInterval <- null
         Cmd.ofSub sub
+
+    let sendFastest time : Cmd<Message>=
+        let p (fastestTime) =
+            promise{
+                let! r = Fetch.postRecord("/api/fastestTime") fastestTime []
+                return r.Ok
+            }
+        Cmd.ofPromise p time (fun _ -> NOP) (fun _ -> NOP)
 
     let private viewTime (timer : Time) =
         timer.[0..2]
@@ -113,4 +123,4 @@ let init () =
 
 let view = View.root
 
-let update =  Core.update View.startTimer View.stopTimer
+let update =  Core.update View.startTimer View.stopTimer View.sendFastest

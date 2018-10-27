@@ -8,12 +8,12 @@ open Giraffe
 
 type Command =
     | Get
-    | Set of int list
+    | Set of int array
 
 let system = System.create "typing-speed" <| Configuration.defaultConfig()
 
 let fastestActor = spawnAnonymous system <| props(fun ctx ->
-    let rec loop (state:int list) = actor {
+    let rec loop (state:int array) = actor {
         match! ctx.Receive() with
         | Set l when l.[3] < state.[3] -> return! loop l
         | Get ->
@@ -22,7 +22,7 @@ let fastestActor = spawnAnonymous system <| props(fun ctx ->
         | _ -> return! loop state
     }
 
-    loop [0;0;0;100000])
+    loop [|10;0;0;100000|])
 
 let getFastest =
     fun (next : HttpFunc) (ctx : HttpContext) ->
@@ -33,7 +33,7 @@ let getFastest =
 let setFastest =
     fun (_ : HttpFunc) (ctx : HttpContext) ->
         task{
-            let! state = ctx.BindJsonAsync<int list>()
+            let! state = ctx.BindJsonAsync<int array>()
             fastestActor <! Set state
             return Some ctx}
 

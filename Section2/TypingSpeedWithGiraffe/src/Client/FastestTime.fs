@@ -34,7 +34,7 @@ open Fable.PowerPack
                 |> String.concat ":"
 
         let root (model:Time) dispatch  = 
-            h1 [][str <| "Fastest Time is " + (model |> TimeUtil.updateTime |> viewTime )]
+            h1 [][str <| "Fastest Time is " + (model |> viewTime )]
     
 
     open Elmish
