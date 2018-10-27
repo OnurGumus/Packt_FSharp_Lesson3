@@ -1,6 +1,7 @@
 module Home
 open TimeUtil
 open Fable.PowerPack
+open Pages
 
 module  Model =
     type Status =
@@ -92,6 +93,7 @@ module private View =
 
     let root model dispatch =
          div [][
+            viewLink Page.FastestTime "See fastest time"
             div [Class "test-wrapper"; Style [BorderColor <| !!getBorderColor model.Status] ] [
                 textarea [
                     Rows 6

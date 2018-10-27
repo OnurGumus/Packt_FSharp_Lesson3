@@ -34,7 +34,11 @@ open Fable.PowerPack
                 |> String.concat ":"
 
         let root (model:Time) dispatch  = 
-            h1 [][str <| "Fastest Time is " + (model |> viewTime )]
+            div [][
+                Pages.viewLink Pages.Page.Home "Compete"
+                h1 [][str <| "Fastest Time is " + (model |> viewTime )]
+            ]
+          
     
 
     open Elmish
