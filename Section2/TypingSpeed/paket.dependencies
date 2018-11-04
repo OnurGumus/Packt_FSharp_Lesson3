@@ -2,7 +2,7 @@ storage none
 framework netstandard2.0
 source https://api.nuget.org/v3/index.json
 nuget Fable.Elmish.React
-nuget Fable.Elmish.Debugger  >= 2.0.1
+nuget Fable.Elmish.Debugger
 nuget Fable.Elmish
 nuget Fable.Elmish.Browser
 nuget Fable.Elmish.HMR

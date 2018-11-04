@@ -41,7 +41,6 @@ open Fable.PowerPack
           
     
 
-    open Elmish
     let init () =
        Model.zeroTime, (View.loadCmd)
 

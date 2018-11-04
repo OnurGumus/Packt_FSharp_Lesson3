@@ -15,7 +15,20 @@ var commonPlugins = [
         template: resolve('index.html')
     })
 ];
+var babelOptions =
+{
+    presets: [
+        ["@babel/preset-env", {
 
+            "targets": {
+                "browsers": ["last 2 versions"]
+            },
+            "modules": false,
+
+            "useBuiltIns": "usage",
+        }]
+    ]
+};
 module.exports = {
     mode: isProduction ? "production" : "development",
     entry:    ["whatwg-fetch","@babel/polyfill", resolve("TypingSpeed.fsproj")],
@@ -36,6 +49,17 @@ module.exports = {
             new webpack.NamedModulesPlugin()
         ]),
     devtool: isProduction ? 'undefined':'source-map',
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /node_modules/,
+                    name: "vendors",
+                    chunks: "all"
+                }
+            }
+        },
+    },
     devServer: {
         contentBase: resolve("/static"),
         port: 8081,
@@ -48,6 +72,10 @@ module.exports = {
             test: /\.fs(x|proj)?$/,
             use: {
                 loader: "fable-loader",
+                options: {
+                    define: isProduction ? [] : ["DEBUG"],
+                    babel:babelOptions
+                }
             }
         },
         {
@@ -55,18 +83,7 @@ module.exports = {
             exclude: /node_modules/,
             use: {
               loader: 'babel-loader',
-              options:  {
-                presets: [
-                    ["@babel/preset-env", {
-        
-                        "targets": {
-                        },
-                        "modules": false,
-                        "useBuiltIns": "usage",
-                    }]
-                ],
-                plugins: ["@babel/plugin-transform-runtime"]
-                }
+              options:  babelOptions
             }
         }
     

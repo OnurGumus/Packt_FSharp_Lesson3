@@ -43,5 +43,6 @@ module View =
         match model with 
         | HomePageModel m ->
             Home.view m (HomeMessage >> dispatch)
-        | FastestTimeModel  t -> FastestTime.view t (FastestTimeMessage >> dispatch)
+        | FastestTimeModel t -> 
+            FastestTime.view t (FastestTimeMessage >> dispatch)
     

@@ -15,14 +15,14 @@ let updateTime (timer : Time) : Time =
 let update startTimer stopTimer message (model : TypingModel) =
     match message with
     | Tick -> { model with Time = updateTime model.Time}, Cmd.none
-    | StartOver ->  {model with Status = Initial; Time = zeroTime; CurrentText = ""} , stopTimer
-    | KeyPress when model.Status = Initial -> { model with Status = JustStarted} , startTimer
+    | StartOver ->  {model with Status = Initial; Time = zeroTime; CurrentText = ""}, stopTimer
+    | KeyPress when model.Status = Initial -> { model with Status = JustStarted}, startTimer
 
     | TextUpdated text when model.Status <> Complete ->
         let model = {model with CurrentText = text}
 
         if model.CurrentText = model.TargetText then
-            {model with Status = Complete} , stopTimer
+            {model with Status = Complete}, stopTimer
         else if (let originTextMatch = model.TargetText.Substring(0, model.CurrentText.Length)  
             model.CurrentText = originTextMatch) then
             { model with Status = Correct}, Cmd.none

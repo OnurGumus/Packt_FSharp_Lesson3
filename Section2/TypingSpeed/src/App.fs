@@ -22,19 +22,9 @@ let stopTimer =
         window?myInterval <- null
     Cmd.ofSub sub
 
-let model = 
-    { Status = Initial; 
-        CurrentText = ""; 
-        TargetText = originText; 
-        Time = zeroTime }
-
 let viewTime (timer : Time) =
-    seq{    
-            yield timer.[0] 
-            yield timer.[1] 
-            yield timer.[2]
-    }
-        |> Seq.map (fun s -> s.ToString("00")) 
+        timer.[0..2]
+        |> List.map (fun s -> s.ToString("00")) 
         |> String.concat ":"
 
 let error _ _ = div[][str "Rendering error"]
