@@ -8,6 +8,8 @@ open Fake.JavaScript
 open Fake.IO.FileSystemOperators
 [<Literal>]
 let FABLE_APP_DIR  = "src/Client"
+
+[<Literal>]
 let SERVER_DIR = "src/Server"
 
 [<Literal>]

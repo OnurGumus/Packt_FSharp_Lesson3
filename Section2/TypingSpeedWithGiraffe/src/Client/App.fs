@@ -6,14 +6,12 @@ open Elmish.React
 open Elmish.Debug
 open Elmish.HMR
 
-
-
 open Pages
 open Elmish.Browser
 open Elmish.ReactNative
 open Main.Model
 
-let urlUpdate (result:Page option) (model : Model)  : Model * Cmd<Message>=
+let urlUpdate (result:Page option) (model : PageModel)  : PageModel * Cmd<Message>=
     printf "%A" result
     System.Console.WriteLine("dfads")
     match result with
@@ -28,7 +26,7 @@ Program.mkProgram init Main.Core.update Main.View.root
 |> Program.toNavigable Pages.urlParser urlUpdate
 #if DEBUG
 |> Program.withConsoleTrace
-|> Program.withHMR
+//|> Program.withHMR
 #endif
 |> Program.withReactUnoptimized "elmish-app"
 #if DEBUG

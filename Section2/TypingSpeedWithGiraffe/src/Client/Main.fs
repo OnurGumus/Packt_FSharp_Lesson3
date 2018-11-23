@@ -1,5 +1,6 @@
 ﻿module Main
 open Pages
+
 module Model = 
     open Home.Model
     open Elmish
@@ -13,7 +14,6 @@ module Model =
         | HomeMessage of Home.Model.Message
         | FastestTimeMessage of Time
 
-    type Model = PageModel
     let init (page : Page option) =
         match page with 
         | Some Page.FastestTime ->  
@@ -24,10 +24,9 @@ module Model =
             HomePageModel model, Cmd.map HomeMessage cmd
 
 module Core =
-    open Model
     open Elmish
-
-    let update (message : Message) (model : Model) = 
+    open Model
+    let update (message : Message) (model : PageModel) = 
         match message, model with
         | HomeMessage msg, HomePageModel m -> 
             let model, cmd = Home.update msg m
@@ -39,7 +38,7 @@ module Core =
 
 module View =
     open Model
-    let root (model : Model) (dispatch  : Message -> unit) = 
+    let root (model : PageModel) (dispatch  : Message -> unit) = 
         match model with 
         | HomePageModel m ->
             Home.view m (HomeMessage >> dispatch)
