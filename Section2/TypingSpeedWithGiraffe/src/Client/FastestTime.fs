@@ -40,7 +40,7 @@ open Fable.PowerPack
         let root (model : Time) _  = 
             div [][
                 Pages.viewLink Pages.Page.Home "Compete"
-                animakit_expander [Expanded  false][
+                animakit_expander [Expanded  true][
                     h1 [][str <| "Fastest Time is " + (model |> viewTime )]
                 ]
             ]

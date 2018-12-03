@@ -79,7 +79,7 @@ let update' = update startTimer stopTimer
 Program.mkProgram init update' view
 
 #if DEBUG
-|> Program.withHMR
+//|> Program.withHMR
 #endif
 
 |> Program.withReact "elmish-app"

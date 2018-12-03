@@ -31,22 +31,25 @@ let getFastest =
             return! json res next ctx
         }
 let setFastest =
-    fun (_ : HttpFunc) (ctx : HttpContext) ->
+    fun _ (ctx : HttpContext) ->
         task{
             let! state = ctx.BindJsonAsync<int array>()
             fastestActor <! Set state
             return Some ctx}
 
 let api : HttpHandler =
-      subRoute "/api"
-        (choose [
-            GET  >=> choose [
-                route "/fastestTime" >=>  getFastest
-            ]
-            POST >=> choose [
-                route "/fastestTime" >=> setFastest
-            ]
-        ])
+      subRoute "/api" <|
+        choose [
+            GET  >=> route "/fastestTime" >=> getFastest
+            POST >=> route "/fastestTime" >=> setFastest
+        ]
+// HttpHandler : HttpFunc -> HttpContext -> Task<HttpContext option>
+// HttpFunc : HttpContext -> Task<HttpContext option>
+// 1: If the last of pipeline and we would to return a result: We return Some HttpContext
+// 2: We don't want to process it but want to pass it to sibling HttpHandler: We return None
+// 3: If we want to inspect the request and response but don't want to alter it: We invoke next
+// 4: We still  return a result but also can invoke another http handler: We return Some Come HttpContext
+
 let webApp rootPath : HttpHandler =
     choose [
         api

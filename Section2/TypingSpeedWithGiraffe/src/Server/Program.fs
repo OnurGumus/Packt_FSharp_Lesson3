@@ -3,10 +3,7 @@ namespace TypingSpeed
 open Microsoft.AspNetCore
 open Microsoft.AspNetCore.Hosting
 
-
 module Program =
-    let exitCode = 0
-
     let CreateWebHostBuilder args =
         WebHost
             .CreateDefaultBuilder(args)
@@ -15,5 +12,4 @@ module Program =
     [<EntryPoint>]
     let main args =
         CreateWebHostBuilder(args).Build().Run()
-
-        exitCode
+        0
